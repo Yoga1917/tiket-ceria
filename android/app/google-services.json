@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "760491184667",
+    "project_id": "tiket-ceria",
+    "storage_bucket": "tiket-ceria.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760491184667:android:c0bed4dd3b7a23e8f05ebe",
+        "android_client_info": {
+          "package_name": "yoga.com.tiket_ceria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760491184667-m5i5sr5e05df4l1v168gfudrnurs4ofb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_xXtpZRbqwoEuosq0mIPmvR2xEVNhMPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760491184667-m5i5sr5e05df4l1v168gfudrnurs4ofb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
