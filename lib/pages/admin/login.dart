@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiket_ceria/auth/firebase_auth_services.dart';
 import 'package:tiket_ceria/common/toast.dart';
 import 'package:tiket_ceria/pages/admin/daftar.dart';
@@ -198,6 +200,57 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ],
                           ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              _signInWithGoogle();
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              height: 45,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, right: 16.0),
+                                    child: Image.asset(
+                                      'assets/google.png',
+                                      width: 24,
+                                      height: 24,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: _isSigning
+                                        ? CircularProgressIndicator(
+                                            color: Colors.white,
+                                          )
+                                        : Text(
+                                            "Daftar Dengan Google",
+                                            style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 0x5F, 0x5C, 0xDE),
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 25,
+                          ),
                         ],
                       ),
                     ),
@@ -227,9 +280,42 @@ class _LoginPageState extends State<LoginPage> {
 
     if (user != null) {
       showToast(message: "Selamat Datang di Tiket Ceria :)");
-      Navigator.pushNamed(context, "/beranda");
+      Navigator.pushNamed(context, "/navigasi");
     } else {
       showToast(message: "Email atau Sandi Anda Salah!!!");
+    }
+  }
+
+  Future<User?> _signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        showToast(message: "Pendaftaran Dengan Google Gagal!!");
+        return null;
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      User? user = userCredential.user;
+
+      if (user != null) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('email', user.email ?? '');
+        prefs.setString('name', user.displayName ?? '');
+
+        showToast(message: "Selamat Datang di Tiket Ceria :)");
+        Navigator.pushNamed(context, "/navigasi");
+      }
+    } catch (e) {
+      showToast(message: "Pendaftaran Dengan Google Gagal!!");
+      return null;
     }
   }
 }

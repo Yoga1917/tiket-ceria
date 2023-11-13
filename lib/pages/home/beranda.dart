@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:tiket_ceria/pages/beranda/cari.dart';
 
 class BerandaPage extends StatelessWidget {
   static final List<String> imgList = [
@@ -48,7 +49,27 @@ class BerandaPage extends StatelessWidget {
               Icons.search,
               color: Color.fromARGB(255, 0x5F, 0x5C, 0xDE),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return CariBeranda();
+                  },
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    const begin = Offset(1.0, 0.0);
+                    const end = Offset.zero;
+                    const curve = Curves.easeInOut;
+                    var tween = Tween(begin: begin, end: end)
+                        .chain(CurveTween(curve: curve));
+                    var offsetAnimation = animation.drive(tween);
+                    return SlideTransition(
+                        position: offsetAnimation, child: child);
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),

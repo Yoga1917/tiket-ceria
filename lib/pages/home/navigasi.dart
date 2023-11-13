@@ -6,7 +6,7 @@ import 'package:tiket_ceria/pages/home/tiket.dart';
 import 'package:tiket_ceria/pages/home/transaksi.dart';
 
 class NavigasiPage extends StatefulWidget {
-  const NavigasiPage({super.key, required child});
+  const NavigasiPage({super.key});
 
   @override
   State<NavigasiPage> createState() => _NavigasiPageState();

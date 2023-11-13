@@ -13,8 +13,7 @@ class EditProfil extends StatelessWidget {
             color: Color.fromARGB(255, 0x5F, 0x5C, 0xDE),
           ),
           onPressed: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).pushNamed('/profile');
+            Navigator.pop(context);
           },
         ),
         title: Text(

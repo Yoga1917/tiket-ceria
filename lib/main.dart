@@ -5,10 +5,9 @@ import 'package:tiket_ceria/app/splash_screen.dart';
 import 'package:tiket_ceria/pages/admin/daftar.dart';
 import 'package:tiket_ceria/pages/admin/login.dart';
 import 'package:tiket_ceria/pages/admin/lupa_sandi.dart';
-import 'package:tiket_ceria/pages/home/beranda.dart';
 import 'package:tiket_ceria/pages/home/navigasi.dart';
-import 'package:tiket_ceria/pages/home/profil.dart';
 import 'package:tiket_ceria/pages/profil/edit_profil.dart';
+import 'package:tiket_ceria/pages/profil/ganti_sandi.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,14 +38,10 @@ class MyApp extends StatelessWidget {
             ),
         '/login': (context) => LoginPage(),
         '/daftar': (context) => SignUpPage(),
-        '/beranda': (context) => NavigasiPage(
-              child: BerandaPage(),
-            ),
-        '/profile': (context) => NavigasiPage(
-              child: ProfilePage(),
-            ),
+        '/navigasi': (context) => NavigasiPage(),
         '/lupaSandi': (context) => LupaSandi(),
         '/editProfil': (context) => EditProfil(),
+        '/gantiSandi': (context) => GantiSandi(),
       },
     );
   }

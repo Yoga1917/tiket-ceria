@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_in_button/sign_in_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiket_ceria/auth/firebase_auth_services.dart';
 import 'package:tiket_ceria/common/toast.dart';
 import 'package:tiket_ceria/pages/admin/login.dart';
@@ -17,7 +17,6 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final FirebaseAuthService _auth = FirebaseAuthService();
 
-  TextEditingController _nikController = TextEditingController();
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -26,7 +25,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
-    _nikController.dispose();
     _usernameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -114,14 +112,6 @@ class _SignUpPageState extends State<SignUpPage> {
                               height: 30,
                             ),
                             FormContainerWidget(
-                              controller: _nikController,
-                              hintText: "NIK",
-                              isPasswordField: false,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            FormContainerWidget(
                               controller: _usernameController,
                               hintText: "Nama Lengkap",
                               isPasswordField: false,
@@ -196,15 +186,53 @@ class _SignUpPageState extends State<SignUpPage> {
                             SizedBox(
                               height: 20,
                             ),
-                            SignInButton(
-                              Buttons.google,
-                              text: "Daftar Dengan Google",
-                              onPressed: () {
+                            GestureDetector(
+                              onTap: () {
                                 _signInWithGoogle();
                               },
+                              child: Container(
+                                width: double.infinity,
+                                height: 45,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0, right: 16.0),
+                                      child: Image.asset(
+                                        'assets/google.png',
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: isSigningUp
+                                          ? CircularProgressIndicator(
+                                              color: Colors.white,
+                                            )
+                                          : Text(
+                                              "Daftar Dengan Google",
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 0x5F, 0x5C, 0xDE),
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                             SizedBox(
-                              height: 20,
+                              height: 25,
                             ),
                           ],
                         ),
@@ -223,7 +251,6 @@ class _SignUpPageState extends State<SignUpPage> {
       isSigningUp = true;
     });
 
-    String nik = _nikController.text;
     String username = _usernameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
@@ -245,7 +272,7 @@ class _SignUpPageState extends State<SignUpPage> {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) {
-        showToast(message: "Login Dengan Google Gagal");
+        showToast(message: "Pendaftaran Dengan Google Gagal!!");
         return null;
       }
 
@@ -260,9 +287,16 @@ class _SignUpPageState extends State<SignUpPage> {
           await FirebaseAuth.instance.signInWithCredential(credential);
       User? user = userCredential.user;
 
-      return user;
+      if (user != null) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('email', user.email ?? '');
+        prefs.setString('name', user.displayName ?? '');
+
+        showToast(message: "Selamat Datang di Tiket Ceria :)");
+        Navigator.pushNamed(context, "/navigasi");
+      }
     } catch (e) {
-      showToast(message: "Google Sign-In Error: $e");
+      showToast(message: "Pendaftaran Dengan Google Gagal!!");
       return null;
     }
   }

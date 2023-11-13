@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   final Widget? child;
@@ -11,13 +12,20 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 10), () {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => widget.child!),
-          (route) => false);
-    });
+    _loadNextScreen();
     super.initState();
+  }
+
+  Future<void> _loadNextScreen() async {
+    await Future.delayed(Duration(seconds: 10));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userLogged = prefs.getString('email');
+
+    if (userLogged == null) {
+      Navigator.pushNamed(context, '/login');
+    } else {
+      Navigator.pushNamed(context, '/navigasi');
+    }
   }
 
   @override
