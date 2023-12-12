@@ -1,6 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:tiket_ceria/pages/beranda/cari.dart';
+import 'package:tiket_ceria/pages/event/esport.dart';
+import 'package:tiket_ceria/pages/event/festival.dart';
+import 'package:tiket_ceria/pages/event/musik.dart';
+import 'package:tiket_ceria/pages/event/seminar.dart';
+import 'package:tiket_ceria/pages/event/senirupa.dart';
+import 'package:tiket_ceria/pages/event/sport.dart';
+import 'package:tiket_ceria/pages/event/standup.dart';
+import 'package:tiket_ceria/pages/event/teater.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BerandaPage extends StatelessWidget {
   static final List<String> imgList = [
@@ -9,28 +18,39 @@ class BerandaPage extends StatelessWidget {
     'assets/iklan3.png',
     'assets/iklan4.png',
   ];
+  void _launchInstagram() async {
+    const url = 'https://www.instagram.com/mdimasprayoga19/';
+    if (!await launchUrl(Uri.parse(url))) {
+      print('Could not launch $url');
+    }
+  }
 
-  final CarouselSlider autoPlayImage = CarouselSlider(
-    options: CarouselOptions(
-      autoPlay: true,
-      height: 200,
-      viewportFraction: 1.0,
-    ),
-    items: imgList.map((fileImage) {
-      return Container(
-        margin: EdgeInsets.symmetric(horizontal: 0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(0)),
-          child: Image.asset(
-            '${fileImage}',
-            width: 360,
-            height: 200,
-            fit: BoxFit.cover,
-          ),
+  CarouselSlider get autoPlayImage => CarouselSlider(
+        options: CarouselOptions(
+          autoPlay: true,
+          height: 200,
+          viewportFraction: 1.0,
         ),
+        items: imgList.asMap().entries.map((entry) {
+          final index = entry.key;
+          final fileImage = entry.value;
+          return Container(
+            margin: EdgeInsets.symmetric(horizontal: 0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(0)),
+              child: InkWell(
+                onTap: index == 3 ? _launchInstagram : null,
+                child: Image.asset(
+                  fileImage,
+                  width: 360,
+                  height: 200,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          );
+        }).toList(),
       );
-    }).toList(),
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +100,119 @@ class BerandaPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               autoPlayImage,
+              SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 16.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Kategori Event",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 12),
+                child: Row(
+                  children: [
+                    CustomCategoryContainer(
+                      imageAsset: 'assets/musik.png',
+                      text: 'Musik',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Musik()),
+                        );
+                      },
+                    ),
+                    CustomCategoryContainer(
+                      imageAsset: 'assets/teater.png',
+                      text: 'Teater',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Teater()),
+                        );
+                      },
+                    ),
+                    CustomCategoryContainer(
+                      imageAsset: 'assets/senirupa.png',
+                      text: 'Seni Rupa',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Seni_Rupa()),
+                        );
+                      },
+                    ),
+                    CustomCategoryContainer(
+                      imageAsset: 'assets/festival.png',
+                      text: 'Festival',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Festival()),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 12),
+                child: Row(
+                  children: [
+                    CustomCategoryContainer(
+                      imageAsset: 'assets/sport.png',
+                      text: 'Sport',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Sport()),
+                        );
+                      },
+                    ),
+                    CustomCategoryContainer(
+                      imageAsset: 'assets/esport.png',
+                      text: 'E-Sport',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => E_Sport()),
+                        );
+                      },
+                    ),
+                    CustomCategoryContainer(
+                      imageAsset: 'assets/seminar.png',
+                      text: 'Seminar',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Seminar()),
+                        );
+                      },
+                    ),
+                    CustomCategoryContainer(
+                      imageAsset: 'assets/standup.png',
+                      text: 'Stand UP',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Stand_UP()),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(
                 height: 50,
               ),
@@ -262,6 +395,50 @@ class BerandaPage extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class CustomCategoryContainer extends StatelessWidget {
+  final String imageAsset;
+  final String text;
+  final VoidCallback onTap;
+
+  const CustomCategoryContainer({
+    Key? key,
+    required this.imageAsset,
+    required this.text,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(7),
+              child: Image.asset(
+                imageAsset,
+                width: 68,
+                height: 68,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       ),
     );

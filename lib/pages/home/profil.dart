@@ -4,6 +4,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiket_ceria/pages/profil/edit_profil.dart';
 import 'package:tiket_ceria/pages/profil/ganti_sandi.dart';
+import 'package:tiket_ceria/pages/profil/kebijakan.dart';
+import 'package:tiket_ceria/pages/profil/syarat.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 String email = '';
 String name = '';
@@ -27,6 +30,26 @@ class _ProfilePageState extends State<ProfilePage> {
       email = prefs.getString('email') ?? '';
       name = prefs.getString('name') ?? '';
     });
+  }
+
+  void _launchWhatsApp() async {
+    final String phoneNumber = '6281390628224';
+    final String message = 'Halo, Saya Butuh Bantuan!!!';
+
+    final String url = 'https://wa.me/$phoneNumber?text=${Uri.parse(message)}';
+
+    if (!await launchUrl(Uri.parse(url))) {
+      print('Could not launch $url');
+    }
+  }
+
+  void _launchYouTube() async {
+    const String youtubeVideoId = 'TAEihBAB968';
+    final String url = 'https://www.youtube.com/watch?v=$youtubeVideoId';
+
+    if (!await launchUrl(Uri.parse(url))) {
+      print('Could not launch $url');
+    }
   }
 
   @override
@@ -197,12 +220,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8),
                     child: GestureDetector(
-                      onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => GantiSandi()),
-                        // );
-                      },
+                      onTap: _launchWhatsApp,
                       child: Container(
                         width: 360,
                         height: 50,
@@ -257,12 +275,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8),
                     child: GestureDetector(
-                      onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => GantiSandi()),
-                        // );
-                      },
+                      onTap: _launchYouTube,
                       child: Container(
                         width: 360,
                         height: 50,
@@ -301,10 +314,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: EdgeInsets.symmetric(horizontal: 8),
                     child: GestureDetector(
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => GantiSandi()),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Syarat()),
+                        );
                       },
                       child: Container(
                         width: 360,
@@ -344,10 +357,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: EdgeInsets.symmetric(horizontal: 8),
                     child: GestureDetector(
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => GantiSandi()),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Kebijakan()),
+                        );
                       },
                       child: Container(
                         width: 360,
