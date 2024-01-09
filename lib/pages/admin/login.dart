@@ -309,6 +309,7 @@ class _LoginPageState extends State<LoginPage> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('email', user.email ?? '');
         prefs.setString('name', user.displayName ?? '');
+        prefs.setString('foto', '');
 
         showToast(message: "Selamat Datang di Tiket Ceria :)");
         Navigator.pushNamed(context, "/navigasi");

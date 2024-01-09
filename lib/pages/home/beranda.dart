@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:tiket_ceria/pages/beranda/cari.dart';
+import 'package:tiket_ceria/pages/deskripsi/acara.dart';
 import 'package:tiket_ceria/pages/event/esport.dart';
 import 'package:tiket_ceria/pages/event/festival.dart';
 import 'package:tiket_ceria/pages/event/musik.dart';
@@ -42,7 +43,7 @@ class BerandaPage extends StatelessWidget {
                 onTap: index == 3 ? _launchInstagram : null,
                 child: Image.asset(
                   fileImage,
-                  width: 360,
+                  width: double.infinity,
                   height: 200,
                   fit: BoxFit.cover,
                 ),
@@ -54,6 +55,7 @@ class BerandaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -95,7 +97,7 @@ class BerandaPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(0),
+          padding: EdgeInsets.symmetric(horizontal: 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -104,7 +106,7 @@ class BerandaPage extends StatelessWidget {
                 height: 50,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 16.0),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -117,7 +119,7 @@ class BerandaPage extends StatelessWidget {
                 height: 30,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 12),
+                padding: EdgeInsets.only(left: 13, right: 5),
                 child: Row(
                   children: [
                     CustomCategoryContainer(
@@ -167,7 +169,7 @@ class BerandaPage extends StatelessWidget {
                 height: 30,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 12),
+                padding: EdgeInsets.only(left: 13, right: 5),
                 child: Row(
                   children: [
                     CustomCategoryContainer(
@@ -217,7 +219,7 @@ class BerandaPage extends StatelessWidget {
                 height: 50,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 16.0),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -230,7 +232,7 @@ class BerandaPage extends StatelessWidget {
                 height: 15,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 16.0),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -244,7 +246,7 @@ class BerandaPage extends StatelessWidget {
                 height: 30,
               ),
               Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -262,7 +264,7 @@ class BerandaPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(7),
                             child: Image.asset(
                               'assets/pamflet1.png',
-                              width: 300,
+                              width: 400,
                             ),
                           ),
                         ),
@@ -318,77 +320,89 @@ class BerandaPage extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 30,
+              ),
               Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => acara()),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(7),
-                            child: Image.asset(
-                              'assets/pamflet2.png',
-                              width: 300,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Text(
-                          "FESTIVAL OLAHRAGA",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w900),
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        Text(
-                          "Ukm Olahraga | STMIK Widya Pratama Pekalongan",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.normal),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          height: 1,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Mulai Dari",
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.normal),
-                            ),
-                            Text(
-                              "Rp50.000",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w900,
-                                color: Color.fromARGB(255, 216, 174, 95),
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(7),
+                              child: Image.asset(
+                                'assets/pamflet2.png',
+                                width: 400,
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                      ],
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            "FESTIVAL OLAHRAGA",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w900),
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Text(
+                            "Ukm Olahraga | STMIK Widya Pratama Pekalongan",
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.normal),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            height: 1,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Mulai Dari",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              Text(
+                                "Rp50.000",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w900,
+                                  color: Color.fromARGB(255, 216, 174, 95),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -418,15 +432,16 @@ class CustomCategoryContainer extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        margin: EdgeInsets.symmetric(horizontal: 0),
+        width: MediaQuery.of(context).size.width / 4.3,
         child: Column(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(7),
               child: Image.asset(
                 imageAsset,
-                width: 68,
-                height: 68,
+                width: 65,
+                height: 65,
                 fit: BoxFit.cover,
               ),
             ),

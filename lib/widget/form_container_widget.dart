@@ -39,13 +39,15 @@ class _FormContainerWidgetState extends State<FormContainerWidget> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: Colors.grey,
-          width: 1,
-        ),
+        // border: Border.all(
+        //   color: Colors.grey,
+        //   width: 1,
+        // ),
       ),
       child: new TextFormField(
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(
+          color: Colors.black,
+        ),
         controller: widget.controller,
         keyboardType: widget.inputType,
         key: widget.fieldKey,
@@ -54,8 +56,13 @@ class _FormContainerWidgetState extends State<FormContainerWidget> {
         validator: widget.validator,
         onFieldSubmitted: widget.onFieldSubmitted,
         decoration: new InputDecoration(
-          border: InputBorder.none,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            // borderSide: BorderSide.none, // Menghilangkan border
+          ),
+          // border: InputBorder.none,
           filled: true,
+          fillColor: Colors.white,
           hintText: widget.hintText,
           hintStyle: TextStyle(
             color: Colors.grey,

@@ -18,7 +18,7 @@ class CariBeranda extends StatelessWidget {
                     IconButton(
                       icon: Icon(
                         Icons.arrow_back,
-                        color: Color.fromARGB(255, 0x5F, 0x5C, 0xDE),
+                        color: Colors.black,
                       ),
                       onPressed: () {
                         Navigator.pop(context);
@@ -32,7 +32,7 @@ class CariBeranda extends StatelessWidget {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(
-                            color: Color.fromARGB(255, 0x5F, 0x5C, 0xDE),
+                            color: Colors.grey,
                           ),
                         ),
                         child: Row(

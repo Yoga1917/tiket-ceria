@@ -20,7 +20,7 @@ class _NavigasiPageState extends State<NavigasiPage> {
         (_) => BerandaPage(),
         (_) => TransaksiPage(),
         (_) => TiketPage(),
-        (_) => ProfilePage(),
+        (_) => ProfilePage(imageUrl: '', isProfilePage: true),
       ],
       bottomNavigationBar: (currentIndex, onTap) => BottomNavigationBar(
         currentIndex: currentIndex,

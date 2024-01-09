@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -8,17 +9,22 @@ import 'package:tiket_ceria/pages/profil/kebijakan.dart';
 import 'package:tiket_ceria/pages/profil/syarat.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-String email = '';
-String name = '';
-
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  String imageUrl = '';
+  final bool isProfilePage;
+
+  
+  ProfilePage({required this.imageUrl, this.isProfilePage = false});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String email = '';
+  String name = '';
+  
+
   void initState() {
     super.initState();
     _loadUser();
@@ -31,6 +37,8 @@ class _ProfilePageState extends State<ProfilePage> {
       name = prefs.getString('name') ?? '';
     });
   }
+
+   
 
   void _launchWhatsApp() async {
     final String phoneNumber = '6281390628224';
@@ -103,10 +111,22 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 15, right: 10),
-                      child: Icon(
+                      child: widget.imageUrl == ''
+                      ? Icon(
                         Icons.account_circle,
                         color: Colors.grey,
                         size: 50,
+                      )
+                      : Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(widget.imageUrl),
+                          ),
+                        ),
                       ),
                     ),
                     Column(
@@ -136,7 +156,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.symmetric(horizontal: 8),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
@@ -176,13 +196,16 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Row(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(right: 15),
+                              padding: EdgeInsets.symmetric(horizontal: 0),
                               child: Icon(Icons.lock_outlined,
                                   color: Colors.black),
                             ),
+                            SizedBox(
+                              width: 20,
+                            ),
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsets.only(right: 8.0),
+                                padding: EdgeInsets.symmetric(horizontal: 0),
                                 child: Text(
                                   'Ganti Password',
                                   textAlign: TextAlign.left,
@@ -231,13 +254,16 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Row(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(right: 15),
+                              padding: EdgeInsets.symmetric(horizontal: 0),
                               child: Icon(Icons.wifi_calling_3_outlined,
                                   color: Colors.black),
                             ),
+                            SizedBox(
+                              width: 20,
+                            ),
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsets.only(right: 8.0),
+                                padding: EdgeInsets.symmetric(horizontal: 0),
                                 child: Text(
                                   'Hubungi Kami',
                                   textAlign: TextAlign.left,
@@ -286,13 +312,16 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Row(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(right: 15),
+                              padding: EdgeInsets.symmetric(horizontal: 0),
                               child:
                                   Icon(Icons.help_outline, color: Colors.black),
                             ),
+                            SizedBox(
+                              width: 20,
+                            ),
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsets.only(right: 8.0),
+                                padding: EdgeInsets.symmetric(horizontal: 0),
                                 child: Text(
                                   'Apa itu Tiket Ceria?',
                                   textAlign: TextAlign.left,
@@ -329,13 +358,16 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Row(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(right: 15),
+                              padding: EdgeInsets.symmetric(horizontal: 0),
                               child: Icon(Icons.description_outlined,
                                   color: Colors.black),
                             ),
+                            SizedBox(
+                              width: 20,
+                            ),
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsets.only(right: 8.0),
+                                padding: EdgeInsets.symmetric(horizontal: 0),
                                 child: Text(
                                   'Syarat & Ketentuan',
                                   textAlign: TextAlign.left,
@@ -372,13 +404,16 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Row(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(right: 15),
+                              padding: EdgeInsets.symmetric(horizontal: 0),
                               child: Icon(Icons.shield_outlined,
                                   color: Colors.black),
                             ),
+                            SizedBox(
+                              width: 20,
+                            ),
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsets.only(right: 8.0),
+                                padding: EdgeInsets.symmetric(horizontal: 0),
                                 child: Text(
                                   'Kebijakan Privasi',
                                   textAlign: TextAlign.left,
